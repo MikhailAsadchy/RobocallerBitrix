@@ -11,7 +11,7 @@ Class rcaller_client extends CModule
 
     const ORDER_PLACED_MODULE_CODE = "sale";
     const ORDER_PLACED_EVENT_NAME = "OnSaleComponentOrderOneStepComplete";
-    const ORDER_PLACED_EVENT_HANDLER_CLASS = "\RCaller\general\RCallerClient";
+    const ORDER_PLACED_EVENT_HANDLER_CLASS = "\classes\general\rcallerclient";
     const ORDER_PLACED_EVENT_HANDLER_METHOD = "sendOrderToRCaller";
 
     function rcaller_client()

@@ -64,31 +64,15 @@ function getPostUrl($APPLICATION, $module_id)
 }
 
 /**
- * @return array
- */
-function getCheckCredentialsSampleOrder()
-{
-    $data = array(
-        'price' => "0.1",
-        'entries' => "check credentials entry",
-        'customerAddress' => "check credentials address",
-        'customerPhone' => "+375292765123",
-        'customerName' => "Credentials checker",
-        'priceCurrency' => "RUB",
-        'channel' => "BITRIX credentials checker");
-    return $data;
-}
-
-/**
  * @param $data
  * @param $userNameFieldValue
  * @param $apiKeyFieldValue
  * @return int
  */
-function sendOrderToRCaller($data, $userNameFieldValue, $apiKeyFieldValue)
+function pingRCaller($userNameFieldValue, $apiKeyFieldValue)
 {
     $rcallerclient = new \classes\general\rcallerclient();
-    $httpCode = $rcallerclient->sendOrderToRCallerInternal($data, $userNameFieldValue, $apiKeyFieldValue);
+    $httpCode = $rcallerclient->checkRCallerCredentials($userNameFieldValue, $apiKeyFieldValue);
     return $httpCode;
 }
 
@@ -100,7 +84,9 @@ function processResponse($httpCode)
 {
     if ($httpCode === 200) {
         $checkCredentialsResult = "success";
-    } else if ($httpCode === 404) {
+    } else if ($httpCode === 400) {
+        $checkCredentialsResult = "bad request. Please, contact you system administrator";
+    } else if ($httpCode === 403) {
         $checkCredentialsResult = "bad credentials";
     } else {
         $checkCredentialsResult = "unknown error";
@@ -130,8 +116,7 @@ if ($RIGHT >= "R") :
             $userNameFieldValue = getFormValue($arAllOptions, $userNameFieldName);
             $apiKeyFieldValue = getFormValue($arAllOptions, $apiKeyFieldName);
 
-            $data = getCheckCredentialsSampleOrder();
-            $httpCode = sendOrderToRCaller($data, $userNameFieldValue, $apiKeyFieldValue);
+            $httpCode = pingRCaller($userNameFieldValue, $apiKeyFieldValue);
             $checkCredentialsResult = processResponse($httpCode);
         }
     }
