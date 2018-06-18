@@ -1,4 +1,7 @@
 <?
+include($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/rcaller.client/include.php");
+use rcaller\adapter\BitrixAdaptedIOC;
+use rcaller\RCallerConstants;
 
 Class rcaller_client extends CModule
 {
@@ -7,14 +10,7 @@ Class rcaller_client extends CModule
 
     var $errors = false;
 
-    const MODULE_CODE = "rcaller.client";
-
-    const ORDER_PLACED_MODULE_CODE = "sale";
-    const ORDER_PLACED_EVENT_NAME = "OnSaleComponentOrderOneStepComplete";
-    const ORDER_PLACED_EVENT_HANDLER_CLASS = "\classes\general\rcallerclient";
-    const ORDER_PLACED_EVENT_HANDLER_METHOD = "sendOrderToRCaller";
-
-    function rcaller_client()
+    function __construct()
     {
         $arModuleVersion = array();
 
@@ -36,8 +32,8 @@ Class rcaller_client extends CModule
     {
         global $DB, $DBType, $APPLICATION;
 
-        if (!IsModuleInstalled(self::MODULE_CODE)) {
-            RegisterModule(self::MODULE_CODE);
+        if (!IsModuleInstalled(RCallerConstants::MODULE_CODE)) {
+            RegisterModule(RCallerConstants::MODULE_CODE);
         }
 
         return true;
@@ -47,27 +43,25 @@ Class rcaller_client extends CModule
     {
         global $DB, $DBType, $APPLICATION;
 
-        if (IsModuleInstalled(self::MODULE_CODE)) {
-            UnRegisterModule(self::MODULE_CODE);
+        if (IsModuleInstalled(RCallerConstants::MODULE_CODE)) {
+            UnRegisterModule(RCallerConstants::MODULE_CODE);
         }
 
-        COption::RemoveOption(self::MODULE_CODE);
+        BitrixAdaptedIOC::getIOC()->getPluginManager()->removeOptions();
 
         return true;
     }
 
     function InstallEvents()
     {
-        $eventManager = \Bitrix\Main\EventManager::getInstance();
-        $eventManager->registerEventHandlerCompatible(self::ORDER_PLACED_MODULE_CODE, self::ORDER_PLACED_EVENT_NAME, self::MODULE_CODE, self::ORDER_PLACED_EVENT_HANDLER_CLASS, self::ORDER_PLACED_EVENT_HANDLER_METHOD);
+        BitrixAdaptedIOC::getIOC()->getPluginManager()->subscribePlaceOrderEvent();
 
         return true;
     }
 
     function UnInstallEvents()
     {
-        $eventManager = \Bitrix\Main\EventManager::getInstance();
-        $eventManager->unRegisterEventHandler(self::ORDER_PLACED_MODULE_CODE, self::ORDER_PLACED_EVENT_NAME, self::MODULE_CODE, self::ORDER_PLACED_EVENT_HANDLER_CLASS, self::ORDER_PLACED_EVENT_HANDLER_METHOD);
+        BitrixAdaptedIOC::getIOC()->getPluginManager()->unsubscribePlaceOrderEvent();
 
         return true;
     }
@@ -76,7 +70,7 @@ Class rcaller_client extends CModule
     {
         global $APPLICATION, $step;
 
-        if (!IsModuleInstalled(self::MODULE_CODE)) {
+        if (!IsModuleInstalled(RCallerConstants::MODULE_CODE)) {
             $this->InstallDB();
             $this->InstallEvents();
 
@@ -88,7 +82,7 @@ Class rcaller_client extends CModule
 
     function DoUninstall()
     {
-        if (IsModuleInstalled(self::MODULE_CODE)) {
+        if (IsModuleInstalled(RCallerConstants::MODULE_CODE)) {
             $this->UnInstallDB();
             $this->UnInstallEvents();
             $GLOBALS["errors"] = $this->errors;
@@ -98,4 +92,3 @@ Class rcaller_client extends CModule
     }
 }
 
-?>

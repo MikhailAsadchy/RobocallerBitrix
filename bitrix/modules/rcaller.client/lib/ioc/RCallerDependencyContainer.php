@@ -3,6 +3,11 @@
 namespace rcaller\lib\ioc;
 
 
+use rcaller\lib\adapterInterfaces\ChannelNameProvider;
+use rcaller\lib\adapterInterfaces\EventService;
+use rcaller\lib\adapterInterfaces\Logger;
+use rcaller\lib\adapterInterfaces\OptionRepository;
+use rcaller\lib\adapterInterfaces\OrderEntryFieldResolver;
 use rcaller\lib\client\RCallerClient;
 use rcaller\lib\dao\credentials\CredentialsManager;
 use rcaller\lib\dto\formatter\EntryAsStringFormatter;
@@ -29,6 +34,14 @@ class RCallerDependencyContainer
     private $rCallerSettingsPageRenderer;
     private $rCallerFormHelper;
 
+    /**
+     * RCallerDependencyContainer constructor.
+     * @param $eventService EventService
+     * @param $logger Logger
+     * @param $optionsRepository OptionRepository
+     * @param $channelNameProvider ChannelNameProvider
+     * @param $orderEntryFieldResolver OrderEntryFieldResolver
+     */
     public function __construct($eventService, $logger, $optionsRepository, $channelNameProvider, $orderEntryFieldResolver)
     {
         // rcaller to wooCommerce adapter
@@ -82,7 +95,7 @@ class RCallerDependencyContainer
     }
 
     /**
-     * @return mixed
+     * @return ChannelNameProvider
      */
     public function getChannelNameProvider()
     {
@@ -90,7 +103,7 @@ class RCallerDependencyContainer
     }
 
     /**
-     * @return mixed
+     * @return EventService
      */
     public function getEventService()
     {
@@ -98,7 +111,7 @@ class RCallerDependencyContainer
     }
 
     /**
-     * @return mixed
+     * @return Logger
      */
     public function getLogger()
     {
@@ -106,7 +119,7 @@ class RCallerDependencyContainer
     }
 
     /**
-     * @return mixed
+     * @return OptionRepository
      */
     public function getOptionsRepository()
     {
@@ -114,7 +127,7 @@ class RCallerDependencyContainer
     }
 
     /**
-     * @return mixed
+     * @return OrderEntryFieldResolver
      */
     public function getOrderEntryFieldResolver()
     {
@@ -152,6 +165,7 @@ class RCallerDependencyContainer
     {
         return $this->entryAsStringFormatter;
     }
+
 
 }
 

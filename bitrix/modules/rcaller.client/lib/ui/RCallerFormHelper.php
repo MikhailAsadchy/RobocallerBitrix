@@ -1,6 +1,7 @@
 <?
 
 namespace rcaller\lib\ui;
+
 use rcaller\lib\client\RCallerClient;
 use rcaller\lib\dao\credentials\CredentialsManager;
 
@@ -37,15 +38,24 @@ class RCallerFormHelper
 
     public function renderUserNameField($username)
     {
-        return "<input name=\"" . self::SETTINGS_FORM_USERNAME . "\" type=\"text\" size=\"25\"
-               value=\"" . $username . "\">";
+        return "<input id=\"" . self::SETTINGS_FORM_USERNAME . "\" name=\"" . self::SETTINGS_FORM_USERNAME . "\" type=\"text\" size=\"25\"
+               value=\"" . htmlspecialcharsbx($username) . "\">";
     }
 
+    public function renderUserNameLabel()
+    {
+        return "<label for=\"" . self::SETTINGS_FORM_USERNAME . "\">UserName:</label>";
+    }
 
     public function renderPasswordField($password)
     {
         return "<input name=\"" . self::SETTINGS_FORM_PASSWORD . "\" type=\"password\" size=\"25\"
-               value=\"" . $password . "\">";
+               value=\"" . htmlspecialcharsbx($password) . "\">";
+    }
+
+    public function renderPasswordLabel()
+    {
+        return "<label for=\"" . self::SETTINGS_FORM_PASSWORD . "\">Password:</label>";
     }
 
     public function renderCheckCredentialsButton()
@@ -150,5 +160,5 @@ class RCallerFormHelper
         }
         return $checkCredentialsResult;
     }
-    
+
 }
