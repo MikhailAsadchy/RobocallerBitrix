@@ -39,7 +39,7 @@ class RCallerFormHelper
     public function renderUserNameField($username)
     {
         return "<input id=\"" . self::SETTINGS_FORM_USERNAME . "\" name=\"" . self::SETTINGS_FORM_USERNAME . "\" type=\"text\" size=\"25\"
-               value=\"" . htmlspecialcharsbx($username) . "\">";
+               value=\"" . htmlspecialchars($username) . "\">";
     }
 
     public function renderUserNameLabel()
@@ -50,7 +50,7 @@ class RCallerFormHelper
     public function renderPasswordField($password)
     {
         return "<input name=\"" . self::SETTINGS_FORM_PASSWORD . "\" type=\"password\" size=\"25\"
-               value=\"" . htmlspecialcharsbx($password) . "\">";
+               value=\"" . htmlspecialchars($password) . "\">";
     }
 
     public function renderPasswordLabel()
