@@ -44,8 +44,8 @@ class RCallerPluginManager
 
     public function addOptions()
     {
-        $this->optionRepository->addOrUpdateOption(RCallerConstants::USER_NAME_OPTION, "");
-        $this->optionRepository->addOrUpdateOption(RCallerConstants::PASSWORD_OPTION, "");
+        $this->optionRepository->addOrUpdateOption(RCallerConstants::USER_NAME_OPTION, RCallerConstants::OPTION_PLACE_HOLDER);
+        $this->optionRepository->addOrUpdateOption(RCallerConstants::PASSWORD_OPTION, RCallerConstants::OPTION_PLACE_HOLDER);
     }
 
     public function removeOptions()

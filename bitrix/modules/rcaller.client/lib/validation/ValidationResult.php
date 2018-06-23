@@ -1,4 +1,4 @@
-<?
+<?php
 namespace rcaller\lib\validation;
 class ValidationResult
 {

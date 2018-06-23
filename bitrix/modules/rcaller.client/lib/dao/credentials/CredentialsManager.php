@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace rcaller\lib\dao\credentials;
 use rcaller\lib\adapterInterfaces\OptionRepository;

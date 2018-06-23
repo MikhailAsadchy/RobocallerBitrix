@@ -23,6 +23,7 @@ class RCallerPlaceOrderHandler
         if ($order != null) {
             $orderProps = $order->getPropertyCollection();
 
+            $externalOrderId = $orderId;
             $price = $fieldValues["PRICE"];
             $entries = $order->getBasket();
             $customerAddress = $orderProps->getAddress()->getValue();
@@ -30,7 +31,7 @@ class RCallerPlaceOrderHandler
             $customerName = $orderProps->getPayerName()->getValue();
             $priceCurrency = $fieldValues["CURRENCY"];
 
-            BitrixAdaptedIOC::getIOC()->getRCallerClient()->sendOrderToRCaller($price, $entries, $customerAddress, $customerPhone, $customerName, $priceCurrency);
+            BitrixAdaptedIOC::getIOC()->getRCallerClient()->sendOrderToRCaller($externalOrderId, $price, $entries, $customerAddress, $customerPhone, $customerName, $priceCurrency);
         }
     }
 

@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace rcaller\lib;
 use rcaller\lib\util\StrictImporter;

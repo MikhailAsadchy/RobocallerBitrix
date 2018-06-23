@@ -37,10 +37,8 @@ class RCallerSettingsPageRenderer
 
     public function renderSettingsPage()
     {
-        $checkCredentialsStatus = $this->rCallerFormHelper->processFormSubmission();
-        $username = $this->credentialsManager->getUserName();
-        $password = $this->credentialsManager->getPassword();
-        echo $this->renderSettingsPageInternal($checkCredentialsStatus, $username, $password);
+        $content = $this->getDefaultView();
+        echo $content;
     }
 
     /**
@@ -68,6 +66,18 @@ class RCallerSettingsPageRenderer
             $this->rCallerFormHelper->renderSaveButton() . "
     </form> 
     ";
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultView()
+    {
+        $checkCredentialsStatus = $this->rCallerFormHelper->processFormSubmission();
+        $username = $this->credentialsManager->getUserName();
+        $password = $this->credentialsManager->getPassword();
+        $content = $this->renderSettingsPageInternal($checkCredentialsStatus, $username, $password);
+        return $content;
     }
 
 }

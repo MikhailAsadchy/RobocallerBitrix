@@ -1,4 +1,4 @@
-<?
+<?php
 namespace rcaller\lib\dto\formatter;
 use rcaller\lib\adapterInterfaces\OrderEntryFieldResolver;
 
